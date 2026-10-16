@@ -42,7 +42,7 @@ export default function Home() {
       buttons={[
         { label: 'TEAM', onPress: () => router.push('/team') },
         { label: 'SEARCH', onPress: () => router.push('/search'), disabled: !canSearch },
-        { label: 'TOOLS', onPress: () => router.push('/tools') },
+        { label: 'MENU', onPress: () => router.push('/menu') },
       ]}
     >
       <View style={styles.topRow}>
