@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
@@ -154,13 +154,9 @@ export const useGame = create<GameState>()(
 
 export const useLead = () => useGame((s) => s.team[0]);
 
+const subscribeHydration = (onChange: () => void) => useGame.persist.onFinishHydration(onChange);
+const getHydrated = () => useGame.persist.hasHydrated();
+
 export function useHydrated(): boolean {
-  const [hydrated, setHydrated] = useState(() => useGame.persist.hasHydrated());
-  useEffect(() => {
-    if (hydrated) return;
-    const unsub = useGame.persist.onFinishHydration(() => setHydrated(true));
-    if (useGame.persist.hasHydrated()) setHydrated(true);
-    return unsub;
-  }, [hydrated]);
-  return hydrated;
+  return useSyncExternalStore(subscribeHydration, getHydrated);
 }
