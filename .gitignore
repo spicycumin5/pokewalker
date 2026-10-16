@@ -41,3 +41,6 @@ example
 # generated native folders
 /ios
 /android
+
+# raw PokéAPI sprites (re-downloadable)
+scripts/.sprite-cache/

@@ -1,9 +1,11 @@
 {
-  "name": "app-tmp",
+  "name": "pokewalker",
   "version": "1.0.0",
   "main": "expo-router/entry",
   "dependencies": {
+    "@expo-google-fonts/press-start-2p": "^0.4.1",
     "@expo/ui": "~58.0.18",
+    "@react-native-async-storage/async-storage": "2.2.0",
     "expo": "~58.0.11",
     "expo-constants": "~58.0.12",
     "expo-device": "~58.0.5",
@@ -11,7 +13,10 @@
     "expo-glass-effect": "~58.0.3",
     "expo-image": "~58.0.15",
     "expo-linking": "~58.0.13",
+    "expo-location": "~58.0.16",
+    "expo-modules-core": "~58.0.19",
     "expo-router": "~58.0.20",
+    "expo-sensors": "~58.0.4",
     "expo-splash-screen": "~58.0.9",
     "expo-status-bar": "~58.0.3",
     "expo-symbols": "~58.0.4",
@@ -25,19 +30,33 @@
     "react-native-safe-area-context": "~5.10.1",
     "react-native-screens": "~4.30.0",
     "react-native-web": "~0.21.4",
-    "react-native-worklets": "0.13.0"
+    "react-native-worklets": "0.13.0",
+    "zustand": "^5.0.15"
   },
   "devDependencies": {
+    "@types/jest": "29.5.14",
     "@types/react": "~19.3.0",
+    "eslint": "^9.0.0",
+    "eslint-config-expo": "~58.0.4",
+    "jest": "~29.7.0",
+    "jest-expo": "^58.0.11",
+    "sharp": "^0.35.5",
     "typescript": "~6.0.3"
   },
   "scripts": {
     "start": "expo start",
-    "reset-project": "node ./scripts/reset-project.js",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "test": "jest",
+    "build:pokedex": "node scripts/build-pokedex.mjs"
   },
-  "private": true
+  "private": true,
+  "jest": {
+    "preset": "jest-expo",
+    "moduleNameMapper": {
+      "^expo-modules-core(/.*)?$": "<rootDir>/node_modules/expo/node_modules/expo-modules-core$1"
+    }
+  }
 }
