@@ -22,7 +22,9 @@
       },
       "predictiveBackGestureEnabled": false,
       "permissions": [
-        "android.permission.ACTIVITY_RECOGNITION"
+        "android.permission.ACTIVITY_RECOGNITION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
       ]
     },
     "web": {
@@ -49,6 +51,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "1e98de59-4639-4b70-af16-815832e0aea0"
+      }
+    },
+    "owner": "unemployment"
   }
 }
