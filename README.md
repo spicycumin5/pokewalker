@@ -1,56 +1,44 @@
-# Welcome to your Expo app 👋
+# PokéWalker
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A phone take on the HeartGold/SoulSilver Pokéwalker: walk to earn watts, spend
+them to search, and the wild Pokémon you meet depend on the real terrain around
+you (OpenStreetMap). Catch them in a Pokéwalker-style minigame and build a team
+of six. Personal hobby project. Pokémon data and sprites come from PokéAPI, so
+it can't be published.
 
-## Get started
-
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **src/app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Run it
 
 ```bash
-npm run reset-project
+npm install
+npx expo start        # scan the QR code with Expo Go on your phone
 ```
 
-This command will move the starter code to the **example** directory and create a blank **src/app** directory where you can start developing.
+- **Steps:** on iOS, steps walked while the app is closed are counted on next
+  open (Core Motion, last 7 days). On Android, only steps walked while the app is
+  open count, until Health Connect is added (needs a development build).
+- **Testing without walking:** use the TOOLS screen. It has +100W and preset
+  locations (lake, beach, cemetery…), and PEEK shows the detected biome and
+  today's local species.
+- **Browser preview** (`npx expo start --web`): there is no step sensor, and
+  terrain lookups usually fall back to "Town" because browsers can't send the
+  User-Agent that Overpass requires.
 
-### Other setup steps
+## How it works
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+| Piece | File |
+| --- | --- |
+| Steps → watts (20 steps = 1W, daily cap) | `src/game/watts.ts`, `src/services/pedometer.ts` |
+| Location → biome (Overpass, cached per ~150 m geohash for 7 days) | `src/services/terrain.ts`, `src/game/classify-biome.ts` |
+| Biome → type weights, OSM tag mapping | `src/data/biomes.ts` |
+| Encounter roll (same spot + same day = same locals) | `src/game/encounter.ts` |
+| Attack / Evade / Catch minigame (pure reducer) | `src/game/battle.ts` |
+| Saved state: watts, team of 6, box, dex | `src/store/use-game.ts` |
+| LCD shell, 3-button device | `src/ui/` |
 
-## Learn more
+## Commands
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+npm test                 # jest: game logic
+npx tsc --noEmit         # typecheck
+npm run build:pokedex    # re-fetch PokéAPI data + regenerate LCD sprites
+```
