@@ -57,6 +57,12 @@
         "projectId": "1e98de59-4639-4b70-af16-815832e0aea0"
       }
     },
-    "owner": "unemployment"
+    "owner": "unemployment",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/1e98de59-4639-4b70-af16-815832e0aea0"
+    }
   }
 }
