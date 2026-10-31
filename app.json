@@ -59,7 +59,7 @@
     },
     "owner": "unemployment",
     "runtimeVersion": {
-      "policy": "appVersion"
+      "policy": "sdkVersion"
     },
     "updates": {
       "url": "https://u.expo.dev/1e98de59-4639-4b70-af16-815832e0aea0"
